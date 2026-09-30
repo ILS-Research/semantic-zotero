@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (30.09.2026)
+
+- Connection setting: directly to Semantic Scholar (optional personal key) or through a Semantic Scholar Bridge.
+- Bridge login with an institution account (OIDC, authorization code + PKCE in the browser, redirect to Zotero's
+  local server, refresh tokens) or with a Zotero key (member of the bridge's Zotero group).
+- Busy answers (429/503) are retried after Retry-After (up to three times) with a waiting message in the window.
+- Clear messages for: not logged in, bridge refused/unreachable, Semantic Scholar busy or unreachable.
+
 ## 0.3.0 (30.09.2026)
 
 - Rebuilt for Zotero 7–10 (bootstrap plugin, `manifest.json`); own ID `semantic-zotero@ils-forschung.de`, updates via the portal.
