@@ -1,0 +1,41 @@
+# Semantic Zotero (Zotero plugin, ILS fork)
+
+Fork of `AgiNetz/semantic-zotero` (MIT, 0.2 for Zotero 6), rebuilt for Zotero 7–10 on branch `ils`: item context
+menu "Show references (Semantic Scholar) …" → window listing the references of the item → "Add" creates the
+reference in the item's library (collections, tags, relation, PDF). Analysis and open work: `ANALYSE-ZOTERO-7.md`
+(German). Version 0.2 sources: git history before the `ils` branch.
+
+## Commands
+
+The host has no usable Node. **Everything runs in Docker** via the scripts.
+
+| Task | Command | Log |
+|---|---|---|
+| Deps, unit tests, typecheck, build, `dist/semantic-zotero-<v>.xpi` | `./build.sh` | `logs/build.log` |
+| E2E (real Zotero 7.0.32 and 10.0.3 under Xvfb + mock Semantic Scholar, ~20 s) | `./e2e/run.sh` | `logs/e2e.log`, `e2e/out/<version>/` |
+| One Zotero version | `ZOTERO_VERSIONS=10.0.3 ./e2e/run.sh` | |
+| Publish to the portal downloads | `scripts/publish.py ../zotero_selfhost_src/data/downloads` | |
+
+- Version only in `package.json`; `manifest.json` keeps `0.0.0` and is stamped at build. Tags `v<version>`.
+- Tests run against the mock (`e2e/mock-s2.mjs`), never against the real API unless asked.
+
+## Layout
+
+| Path | Purpose |
+|---|---|
+| `bootstrap.js`, `src/index.ts` | Plugin object `Zotero.SemanticZotero` (menu, prefs pane, windows) |
+| `src/prefs.ts`, `prefs.js` | `extensions.zotero.semanticzotero.*`: `baseUrl` (API or proxy), `apiKey`, `relateItems`, `locale`; migrates the Zotero 6 prefs `SemanticZotero.*` |
+| `src/s2/` | Pure API logic: item → paper ID (`ids.ts`), requests and title fallback (`client.ts`), reference helpers (`reference.ts`) |
+| `src/ui/context-menu.ts` | MenuManager on Zotero 8+, DOM entry in `#zotero-itemmenu` on Zotero 7 |
+| `src/ui/references-window.ts`, `content/references.xhtml` | References window (`data-state` loading/ready/error) |
+| `src/ui/add-dialog.ts`, `content/addReference.xhtml` | Add dialog and `addReference()` |
+| `src/ui/preferences.ts`, `content/preferences.xhtml` | Settings pane |
+| `src/i18n.ts`, `locale/*/semanticzotero.ftl` | Window texts (EN/DE via `t()`), menu label via Fluent |
+| `test/*.test.ts`, `test/e2e/` | Unit tests; E2E harness and scenarios |
+
+## Pitfalls
+
+- MenuManager rejects top-level separators for `main/library/item`, and adds plugin entries in
+  `ZoteroPane.buildItemContextMenu()` (async): tests must open the menu via `onItemsContextMenuOpen`, not `openPopup`.
+- The Zotero 7 tarball is `.tar.bz2`, Zotero 8+ `.tar.xz` (e2e/Dockerfile tries both).
+- Bootstrap sandbox lacks `fetch` sometimes: use `src/util/env.ts`.
