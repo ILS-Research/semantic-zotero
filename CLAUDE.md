@@ -38,4 +38,7 @@ The host has no usable Node. **Everything runs in Docker** via the scripts.
 - MenuManager rejects top-level separators for `main/library/item`, and adds plugin entries in
   `ZoteroPane.buildItemContextMenu()` (async): tests must open the menu via `onItemsContextMenuOpen`, not `openPopup`.
 - The Zotero 7 tarball is `.tar.bz2`, Zotero 8+ `.tar.xz` (e2e/Dockerfile tries both).
+- Zotero 7+ silently ignores a plugin without `applications.zotero.update_url` (no error in the log); the E2E run
+  aborts after 30 s when the harness did not start.
+- Upstream PR: branch `zotero7` (original ID `tomasdanis26@gmail.com`, no ILS parts), AgiNetz/semantic-zotero#4.
 - Bootstrap sandbox lacks `fetch` sometimes: use `src/util/env.ts`.
