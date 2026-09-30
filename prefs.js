@@ -7,13 +7,13 @@ pref("extensions.zotero.semanticzotero.baseUrl", "https://api.semanticscholar.or
 // Personal key, sent as x-api-key (direct only).
 pref("extensions.zotero.semanticzotero.apiKey", "");
 // Bridge: Graph API base, e.g. https://bridge.example.org/graph/v1, and how to log in ("oidc" or "zotero").
-pref("extensions.zotero.semanticzotero.bridgeUrl", "");
+pref("extensions.zotero.semanticzotero.bridgeUrl", "https://zotero.ils.local/s2/graph/v1");
 pref("extensions.zotero.semanticzotero.bridgeAuth", "oidc");
 // Zotero API key of a member of the bridge's Zotero group (a separate key, not the sync key).
 pref("extensions.zotero.semanticzotero.zoteroKey", "");
 // OIDC provider of the bridge (e.g. https://keycloak.example.org/realms/example) and the public client ID.
-pref("extensions.zotero.semanticzotero.oidcIssuer", "");
-pref("extensions.zotero.semanticzotero.oidcClientId", "semantic-zotero");
+pref("extensions.zotero.semanticzotero.oidcIssuer", "https://gumaccount.ils.local/realms/gumaccount");
+pref("extensions.zotero.semanticzotero.oidcClientId", "zotero-semantic-scholar-bridge");
 // Mark a newly added reference and the citing item as related.
 pref("extensions.zotero.semanticzotero.relateItems", true);
 // UI language: "" = follow Zotero, or "en" / "de".

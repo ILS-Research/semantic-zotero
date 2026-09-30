@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 (30.09.2026)
+
+- ILS defaults for the bridge: address https://zotero.ils.local/s2/graph/v1, login via GuM Account
+  (issuer https://gumaccount.ils.local/realms/gumaccount, client `zotero-semantic-scholar-bridge`).
+  The connection stays "direct" until the bridge runs at the ILS.
+
 ## 0.4.0 (30.09.2026)
 
 - Connection setting: directly to Semantic Scholar (optional personal key) or through a Semantic Scholar Bridge.
