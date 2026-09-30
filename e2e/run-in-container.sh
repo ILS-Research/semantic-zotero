@@ -30,12 +30,11 @@ user_pref("extensions.zotero.SemanticZotero.apiKey", "legacy-key");
 user_pref("extensions.zotero.SemanticZotero.relateItems", true);
 PREFS
 
-certutil -N -d "sql:$PROFILE" --empty-password
-for crt in /usr/local/share/ca-certificates/inhouse/*.crt; do
-  [ -f "$crt" ] && certutil -A -d "sql:$PROFILE" -n "$(basename "$crt" .crt)" -t "C,," -i "$crt"
-done
-
 node /e2e/mock-s2.mjs > /out/mock-s2.log 2>&1 &
+
+# Fail fast when the plugin does not load at all (e.g. invalid manifest): no harness, no results.
+(sleep 30; grep -q "harness installed" /out/zotero.log 2>/dev/null \
+  || { echo "E2E: plugin not loaded after 30 s (check manifest.json)" >&2; pkill -f zotero-bin; }) &
 
 timeout "${E2E_TIMEOUT:-240}" xvfb-run -a -s "-screen 0 1600x1000x24" \
   /opt/zotero/zotero -profile "$PROFILE" -ZoteroDebugText > /out/zotero.log 2>&1
