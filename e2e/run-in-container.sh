@@ -10,7 +10,7 @@ export HOME=$WORK/home
 PROFILE=$WORK/profile
 mkdir -p "$HOME" "$PROFILE/extensions" "$WORK/data" /out
 rm -f /out/results.json /out/screenshot-*.png
-cp "$XPI" "$PROFILE/extensions/tomasdanis26@gmail.com.xpi"
+cp "$XPI" "$PROFILE/extensions/semantic-zotero@ils-forschung.de.xpi"
 
 cat > "$PROFILE/user.js" <<PREFS
 user_pref("extensions.autoDisableScopes", 0);

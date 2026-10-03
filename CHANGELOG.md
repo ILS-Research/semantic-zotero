@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.1 – ILS build (03.10.2026)
+
+ILS fork (`ils` = upstream `main` + bridge PR AgiNetz/semantic-zotero#5 + ILS commit), replaces 0.5.0:
+
+- Based on upstream 0.3.0: README, generic proxy help text, add dialog shows subcollections with their parent path.
+- ILS parts: own ID `semantic-zotero@ils-forschung.de`, updates via the portal
+  (`https://zotero.ils.local/downloads/semantic-zotero/updates.json`), ILS defaults for the bridge
+  (https://zotero.ils.local/s2/graph/v1, login via GuM Account: issuer https://gumaccount.ils.local/realms/gumaccount,
+  client `zotero-semantic-scholar-bridge`). The connection stays "direct" until the bridge runs at the ILS.
+
 ## Unreleased
 
 - Connection setting: directly to Semantic Scholar (optional personal key) or through a Semantic Scholar Bridge.

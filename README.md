@@ -1,5 +1,7 @@
 # Semantic Zotero Plugin
 
+> ILS fork for Zotero 7–10 (branch `ils`). Right-click an item → *Show references (Semantic Scholar) …*; settings under Zotero → Settings → Semantic Zotero. Build: `./build.sh`, tests: `./e2e/run.sh` (see `CLAUDE.md`).
+
 Semantic Zotero integrates Zotero with Semantic Scholar to fetch and display references related to a selected paper. You can then add them to your library directly from Zotero along with the full-text PDF. For now, the visuals are pretty barebones, I will update when I have time.
 
 ![refs](https://github.com/AgiNetz/semantic-zotero/assets/29703385/d99ca766-182e-4d10-8c5d-5ee5199615dd)

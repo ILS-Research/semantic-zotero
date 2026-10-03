@@ -1,22 +1,24 @@
-# Semantic Zotero (Zotero plugin)
+# Semantic Zotero (Zotero plugin, ILS fork)
 
-Zotero 7–10 bootstrap plugin: item context menu "Show references (Semantic Scholar) …" → window listing the
-references of the item → "Add" creates the reference in the item's library (collections, tags, relation, PDF).
-Connects to Semantic Scholar directly (optional key, or a proxy) or through a Semantic Scholar Bridge.
-The Zotero 6 version (0.2) is in the git history before 0.3.0.
+Fork of `AgiNetz/semantic-zotero` (MIT, 0.2 for Zotero 6), rebuilt for Zotero 7–10 on branch `ils`: item context
+menu "Show references (Semantic Scholar) …" → window listing the references of the item → "Add" creates the
+reference in the item's library (collections, tags, relation, PDF). Analysis and open work: `ANALYSE-ZOTERO-7.md`
+(German). Version 0.2 sources: git history before the `ils` branch.
 
 ## Commands
 
-**Everything runs in Docker** via the scripts (no Node needed on the host).
+The host has no usable Node. **Everything runs in Docker** via the scripts.
 
 | Task | Command | Log |
 |---|---|---|
 | Deps, unit tests, typecheck, build, `dist/semantic-zotero-<v>.xpi` | `./build.sh` | `logs/build.log` |
 | E2E (real Zotero 7.0.32 and 10.0.3 under Xvfb + mock Semantic Scholar, ~20 s) | `./e2e/run.sh` | `logs/e2e.log`, `e2e/out/<version>/` |
 | One Zotero version | `ZOTERO_VERSIONS=10.0.3 ./e2e/run.sh` | |
+| Publish to the portal downloads | `scripts/publish.py ../zotero_selfhost_src/data/downloads` | |
 
-- Version only in `package.json`; `manifest.json` keeps `0.0.0` and is stamped at build. Tags `v<version>`.
-- Release: `updates.json` (the `update_url`) lists the xpi of the GitHub release `v<version>`; add the new version there.
+- Version only in `package.json`; `manifest.json` keeps `0.0.0` and is stamped at build. Tags `v<version>-ils` (plain `vX.Y.Z` tags are upstream's).
+- Branches: `main` = upstream, `bridge` = PR AgiNetz/semantic-zotero#5 (no ILS parts), `ils` = `bridge` + one commit
+  with all ILS parts (ID, portal update_url, CAs, bridge defaults, publish script, docs). Keep upstream work free of ILS parts.
 - Tests run against the mock (`e2e/mock-s2.mjs`), never against the real API unless asked.
 
 ## Layout
@@ -41,7 +43,8 @@ The Zotero 6 version (0.2) is in the git history before 0.3.0.
 - The Zotero 7 tarball is `.tar.bz2`, Zotero 8+ `.tar.xz` (e2e/Dockerfile tries both).
 - Zotero 7+ silently ignores a plugin without `applications.zotero.update_url` (no error in the log); the E2E run
   aborts after 30 s when the harness did not start.
-- Bridge: <https://github.com/ILS-Research/semantic-scholar-api-key-bridge-for-semantic-zotero> (SvelteKit). The E2E mock (`e2e/mock-s2.mjs`) imitates it under
+- Upstream PR: branch `zotero7` (original ID `tomasdanis26@gmail.com`, no ILS parts), AgiNetz/semantic-zotero#4 (merged, upstream 0.3.0); bridge and retries: branch `bridge`, #5.
+- Bridge: `../semantic-scholar-bridge-src` (SvelteKit). The E2E mock (`e2e/mock-s2.mjs`) imitates it under
   `/bridge/graph/v1` and runs a small OIDC provider under `/oidc/realms/test`; keep it in line with the real bridge.
 - The OIDC callback endpoint must accept browser navigation: `allowRequestsFromUnsafeWebContent` (Zotero 8+) and
   non-simple `supportedDataTypes` (Zotero 7 blocks browser requests otherwise, 403).
