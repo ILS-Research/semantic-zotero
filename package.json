@@ -1,8 +1,8 @@
 {
   "name": "semantic-zotero",
-  "version": "0.3.0",
+  "version": "0.5.1",
   "description": "Semantic Zotero - references of a paper from Semantic Scholar, added to Zotero with one click",
-  "author": "Tomáš Daniš",
+  "author": "Tomáš Daniš, ILS",
   "license": "MIT",
   "private": true,
   "scripts": {

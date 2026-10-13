@@ -1,5 +1,7 @@
 # Semantic Zotero Plugin
 
+> ILS fork for Zotero 7–10 (branch `ils`). Right-click an item → *Show references (Semantic Scholar) …*; settings under Zotero → Settings → Semantic Zotero. Build: `./build.sh`, tests: `./e2e/run.sh` (see `CLAUDE.md`).
+
 Semantic Zotero integrates Zotero with Semantic Scholar to fetch and display references related to a selected paper. You can then add them to your library directly from Zotero along with the full-text PDF. For now, the visuals are pretty barebones, I will update when I have time.
 
 ![refs](https://github.com/AgiNetz/semantic-zotero/assets/29703385/d99ca766-182e-4d10-8c5d-5ee5199615dd)
@@ -31,6 +33,6 @@ Requires Zotero 7–10.
 Everything builds and runs in Docker:
 
 - `./build.sh` – unit tests, typecheck, build, `dist/semantic-zotero-<version>.xpi`
-- `./e2e/run.sh` – end-to-end tests in real Zotero 7.0.32 and 10.0.3 (headless, Xvfb) against a mock Semantic Scholar API, bridge and OIDC provider
+- `./e2e/run.sh` – end-to-end tests in the newest Zotero 7 and the current release (headless, Xvfb) against a mock Semantic Scholar API, bridge and OIDC provider
 
 Without Docker, Node 22 and `zip` are enough: `npm ci && npm test && npm run build -- --pack`.

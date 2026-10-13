@@ -2,8 +2,8 @@
 # E2E tests: builds the E2E variant of Semantic Zotero (in the build container), then
 # runs it in real Zotero versions under Xvfb against a mock Semantic Scholar server.
 # Headless, Docker only. Output per version in e2e/out/<version>/.
-#   ./e2e/run.sh                      Zotero 7 (legacy menu) and 10 (MenuManager)
-#   ZOTERO_VERSIONS=10.0.3 ./e2e/run.sh
+#   ./e2e/run.sh                      newest Zotero 7 (legacy menu) and newest current one (MenuManager)
+#   ZOTERO_VERSIONS=10.0.6 ./e2e/run.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -16,7 +16,7 @@ if ! docker info >/dev/null 2>&1; then DOCKER=(sudo docker); fi
 
 ./build.sh e2e
 failed=0
-for v in ${ZOTERO_VERSIONS:-7.0.32 10.0.3}; do
+for v in ${ZOTERO_VERSIONS:-$(e2e/zotero-versions.sh | sed -n "1p;\$p")}; do
   echo "== Zotero $v"
   "${DOCKER[@]}" build --progress=plain --build-arg ZOTERO_VERSION="$v" -t "semanticzotero-e2e:$v" e2e/
   mkdir -p "e2e/out/$v"

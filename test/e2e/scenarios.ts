@@ -395,7 +395,7 @@ export const scenarios: Scenario[] = [
 
   ['disable removes the menu, enable restores it', async (ctx) => {
     const { AddonManager } = ChromeUtils.importESModule('resource://gre/modules/AddonManager.sys.mjs');
-    const addon = await AddonManager.getAddonByID('tomasdanis26@gmail.com');
+    const addon = await AddonManager.getAddonByID('semantic-zotero@ils-forschung.de');
     await addon.disable();
     await waitFor('plugin gone', () => !Zotero.SemanticZotero);
     await select(ctx.paper);
